@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Tường Lớp Yêu Thương - Triển Lãm Kỷ Niệm</title>
+    <!-- Import font chữ thân thiện, tròn trịa -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 50%, #e3f2fd 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: 3px dashed #ffb74d;
+        }
+        header h1 {
+            font-size: 2.3rem;
+            color: #e91e63;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px #ffe0b2;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 2px solid #fff;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 4px solid #ffcc80;
+            cursor: pointer;
+        }
+        .card-caption {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #455a64;
+            font-size: 0.95rem;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: #78909c;
+            font-weight: 600;
+        }
+
+        /* Hiệu ứng phóng to ảnh khi bấm vào */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🌟 BÁO TƯỜNG KỶ NIỆM LỚP YÊU THƯƠNG 🌟</h1>
+            <p>Triển lãm 22 khoảnh khắc tuyệt vời và ngộ nghĩnh nhất của các bé!</p>
+        </header>
+
+        <!-- Khung chứa ảnh sẽ được tạo tự động bằng JavaScript khớp với thư mục images/ -->
+        <div class="gallery" id="gallery"></div>
+
+        <footer>
+            <p>Trang web thực hiện bởi Cô và Trò lớp chúng mình ❤️</p>
+        </footer>
+    </div>
+
+    <!-- Hộp thoại phóng to ảnh -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" src="" alt="Phóng to">
+    </div>
+
+    <script>
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+
+        // Tự động lặp qua 22 hình ảnh trong thư mục images/ với tên từ hinh-1.jpg đến hinh-22.jpg
+        for (let i = 1; i <= 22; i++) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const imagePath = `images/hinh-${i}.jpg`;
+
+            card.innerHTML = `
+                <img src="${imagePath}" alt="Khoảnh khắc ${i}" onclick="openModal('${imagePath}')" onerror="this.src='https://via.placeholder.com/300x220?text=Anh+${i}+chua+co'">
+                <div class="card-caption">Khoảnh khắc dễ thương #${i}</div>
+            `;
+            gallery.appendChild(card);
+        }
+
+        function openModal(src) {
+            modal.style.display = 'flex';
+            modalImg.src = src;
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
