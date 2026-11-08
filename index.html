@@ -229,7 +229,7 @@
     <!-- POPUP TRÌNH PHÁT NHẠC GÓC MÀN HÌNH -->
     <div class="music-popup" id="musicPopup">
         <div class="music-info" id="musicInfo">🎶 Đang tải nhạc...</div>
-        <button class="music-btn" id="playPauseBtn" onclick="togglePlay()">⏸️</button>
+        <button class="music-btn" id="playPauseBtn" onclick="togglePlay()">▶️</button>
         <button class="music-btn" id="nextBtn" onclick="nextSong()" title="Bài tiếp theo">⏭️</button>
         <div class="volume-control">
             🔊 <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" onchange="changeVolume(this.value)" oninput="changeVolume(this.value)">
@@ -345,12 +345,12 @@
                 src: "music/buiphan.mp3"
             },
             {
-                title: "🎶 Người thầy",
-                src: "music/nguoithay.mp3"
+                title: "🎶 Khi Tóc Thầy Bạc Trắng",
+                src: "music/khitocthay.mp3"
             },
             {
                 title: "🎶 Nhớ Ơn Thầy Cô",
-                src: "music/nhoonthayco.mp3"
+                src: "music/nhoonnthayco.mp3"
             }
         ];
 
@@ -370,8 +370,11 @@
 
         function togglePlay() {
             if (audio.paused) {
-                audio.play();
-                playPauseBtn.innerText = '⏸️';
+                audio.play().then(() => {
+                    playPauseBtn.innerText = '⏸️';
+                }).catch(err => {
+                    console.log("Play blocked:", err);
+                });
             } else {
                 audio.pause();
                 playPauseBtn.innerText = '▶️';
@@ -381,8 +384,9 @@
         function nextSong() {
             currentSongIndex = (currentSongIndex + 1) % playlist.length;
             loadSong(currentSongIndex);
-            audio.play();
-            playPauseBtn.innerText = '⏸️';
+            audio.play().then(() => {
+                playPauseBtn.innerText = '⏸️';
+            });
         }
 
         function changeVolume(val) {
@@ -395,11 +399,22 @@
 
         loadSong(currentSongIndex);
 
+        // Cố gắng tự động phát nhạc khi tải trang
+        window.addEventListener('load', () => {
+            audio.play().then(() => {
+                playPauseBtn.innerText = '⏸️';
+            }).catch(error => {
+                console.log("Autoplay blocked by browser policy, waiting for user interaction.");
+                playPauseBtn.innerText = '▶️';
+            });
+        });
+
+        // Bổ sung lắng nghe sự kiện click bất kỳ trên trang để kích hoạt phát nhạc nếu bị chặn autoplay
         document.addEventListener('click', function musicAutoPlay() {
             if (audio.paused) {
                 audio.play().then(() => {
                     playPauseBtn.innerText = '⏸️';
-                }).catch(e => console.log("Autoplay restricted"));
+                }).catch(e => console.log("Play error:", e));
             }
             document.removeEventListener('click', musicAutoPlay);
         }, { once: true });
