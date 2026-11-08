@@ -123,7 +123,7 @@
             <p>Triển lãm 22 khoảnh khắc tuyệt vời và ngộ nghĩnh nhất của các bé!</p>
         </header>
 
-        <!-- Khung chứa ảnh sẽ được tạo tự động bằng JavaScript khớp với thư mục images/ -->
+        <!-- Khung chứa ảnh sẽ được tạo tự động khớp với thư mục images/ và tên từ 1.jpg đến 22.jpg -->
         <div class="gallery" id="gallery"></div>
 
         <footer>
@@ -142,12 +142,13 @@
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
 
-        // Tự động lặp qua 22 hình ảnh trong thư mục images/ với tên từ hinh-1.jpg đến hinh-22.jpg
+        // Tự động lặp qua 22 hình ảnh trong thư mục images/ từ 1.jpg đến 22.jpg
         for (let i = 1; i <= 22; i++) {
             const card = document.createElement('div');
             card.className = 'card';
             
-            const imagePath = `images/hinh-${i}.jpg`;
+            // Đường dẫn gọi ảnh: images/1.jpg, images/2.jpg ... images/22.jpg
+            const imagePath = `images/${i}.jpg`;
 
             card.innerHTML = `
                 <img src="${imagePath}" alt="Khoảnh khắc ${i}" onclick="openModal('${imagePath}')" onerror="this.src='https://via.placeholder.com/300x220?text=Anh+${i}+chua+co'">
