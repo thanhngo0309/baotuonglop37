@@ -96,6 +96,7 @@
         header p:nth-of-type(2) { font-weight: 700; color: #2e7d32; }
         header p:nth-of-type(3) { font-weight: 600; color: #e65100; font-size: 1rem; }
 
+        /* Khung Lời Ngỏ */
         .intro-box {
             background: rgba(255, 255, 255, 0.95);
             color: #333;
@@ -122,6 +123,39 @@
             font-size: 1.02rem;
             text-align: justify;
         }
+        
+        /* Bố cục 2 ảnh tập thể xếp thành 2 bên dưới lời ngỏ */
+        .intro-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        .intro-photo-card {
+            background: #fff;
+            padding: 10px 10px 15px 10px;
+            border-radius: 10px;
+            border: 2px solid #ffcc80;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .intro-photo-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .intro-photo-caption {
+            margin-top: 10px;
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
         .intro-box .quote-highlight {
             font-weight: 700;
             color: #c2185b;
@@ -143,7 +177,7 @@
             padding: 10px;
         }
         @media (max-width: 600px) {
-            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-grid, .intro-photos-grid { grid-template-columns: 1fr; }
             .intro-box { padding: 20px; }
             .music-popup { bottom: 10px; right: 10px; padding: 8px 12px; }
         }
@@ -229,15 +263,15 @@
     <!-- POPUP TRÌNH PHÁT NHẠC GÓC MÀN HÌNH -->
     <div class="music-popup" id="musicPopup">
         <div class="music-info" id="musicInfo">🎶 Đang tải nhạc...</div>
-        <button class="music-btn" id="playPauseBtn" onclick="togglePlay()">▶️</button>
+        <button class="music-btn" id="playPauseBtn" onclick="togglePlay()">⏸️</button>
         <button class="music-btn" id="nextBtn" onclick="nextSong()" title="Bài tiếp theo">⏭️</button>
         <div class="volume-control">
             🔊 <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" onchange="changeVolume(this.value)" oninput="changeVolume(this.value)">
         </div>
     </div>
 
-    <!-- Audio Element ẩn -->
-    <audio id="bgAudio"></audio>
+    <!-- Audio Element -->
+    <audio id="bgAudio" autoplay></audio>
 
     <header>
         <h1>🌟 TRIỂN LÃM BÁO TƯỜNG KỶ NIỆM 20/11 🌟</h1>
@@ -246,14 +280,29 @@
         <p>Năm học 2026-2027</p>
     </header>
 
+    <!-- Khung Lời Ngỏ có 2 ảnh tập thể xếp 2 bên ở phần dưới -->
     <div class="intro-box">
         <h2>📖 Lời Ngỏ: Chuyến Đò Ân Tình</h2>
         <p>Tháng 11 gợi nhắc mỗi chúng ta hướng về ngày Nhà giáo Việt Nam 20/11 – ngày tôn vinh những người mang sứ mệnh cao cả: "Người đưa đò thầm lặng".</p>
         <p>Từ muôn đời nay, truyền thống <em>“Tôn sư trọng đạo”</em> đã trở thành đạo lý tốt đẹp ngấm sâu vào máu thịt của dân tộc Việt Nam. Người thầy, người cô không chỉ truyền đạt cho chúng em tri thức, chắp cánh cho những ước mơ bay cao bay xa, mà còn dạy chúng em cách làm người, nuôi dưỡng tâm hồn chúng em bằng tình thương bao la và sự tận tụy.</p>
         <p>Mỗi bức ảnh, mỗi khoảnh khắc được lưu giữ trong trang báo tường này chính là những đóa hoa tươi thắm nhất, là tình cảm chân thành và lòng biết ơn sâu sắc nhất mà cô và trò lớp mình muốn gửi gắm đến thầy cô.</p>
+
+        <!-- 2 ảnh tập thể xếp thành 2 bên ở dưới lời ngỏ -->
+        <div class="intro-photos-grid">
+            <div class="intro-photo-card">
+                <img src="images/tapthe1.jpg" alt="Tập thể lớp 3/7" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+Tap+The+1';">
+                <div class="intro-photo-caption">Tập thể lớp 3/7 ❤️</div>
+            </div>
+            <div class="intro-photo-card">
+                <img src="images/tapthe2.jpg" alt="Cô và trò lớp 3/7" onerror="this.src='https://via.placeholder.com/400x300?text=Anh+Tap+The+2';">
+                <div class="intro-photo-caption">Kỷ niệm mến yêu ✨</div>
+            </div>
+        </div>
+
         <span class="quote-highlight">Nhân ngày 20/11, xin kính chúc các thầy cô luôn dồi dào sức khỏe, hạnh phúc và gặt hái thật nhiều thành công trong sự nghiệp trồng người! ❤️</span>
     </div>
 
+    <!-- Khu vực hiển thị lưới ảnh dài (2 ảnh mỗi hàng, xoay ngẫu nhiên) -->
     <div class="gallery-grid" id="galleryGrid"></div>
 
     <footer>
@@ -338,15 +387,15 @@
             }
         }
 
-        // --- PLAYLIST NHẠC TRONG THƯ MỤC music ---
+        // --- PLAYLIST NHẠC TỰ ĐỘNG PHÁT ---
         const playlist = [
-            {
-                title: "🎶 Bụi Phấn",
-                src: "music/buiphan.mp3"
-            },
             {
                 title: "🎶 Người thầy",
                 src: "music/nguoithay.mp3"
+            },
+            {
+                title: "🎶 Bụi Phấn",
+                src: "music/buiphan.mp3"
             },
             {
                 title: "🎶 Nhớ Ơn Thầy Cô",
@@ -399,17 +448,15 @@
 
         loadSong(currentSongIndex);
 
-        // Cố gắng tự động phát nhạc khi tải trang
-        window.addEventListener('load', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             audio.play().then(() => {
                 playPauseBtn.innerText = '⏸️';
             }).catch(error => {
-                console.log("Autoplay blocked by browser policy, waiting for user interaction.");
+                console.log("Autoplay blocked by browser policy, waiting for first interaction.");
                 playPauseBtn.innerText = '▶️';
             });
         });
 
-        // Bổ sung lắng nghe sự kiện click bất kỳ trên trang để kích hoạt phát nhạc nếu bị chặn autoplay
         document.addEventListener('click', function musicAutoPlay() {
             if (audio.paused) {
                 audio.play().then(() => {
