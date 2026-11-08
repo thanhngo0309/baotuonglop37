@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo Tường Kỷ Niệm Lớp Yêu Thương - Sách Ảnh Nghệ Thuật</title>
+    <title>Báo Tường Kỷ Niệm Lớp Yêu Thương - Triển Lãm Nghệ Thuật</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,162 +12,203 @@
             background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 50%, #e3f2fd 100%);
             color: #333; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            padding: 20px; overflow-x: hidden;
+            padding: 20px;
         }
         header {
-            text-align: center; padding: 25px 20px;
+            text-align: center; padding: 30px 20px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 20px; border: 3px dashed #ffb74d; width: 100%; max-width: 900px;
+            margin-bottom: 30px; border: 3px dashed #ffb74d; width: 100%; max-width: 900px;
         }
-        header h1 { font-size: 2rem; color: #e91e63; margin-bottom: 5px; text-shadow: 2px 2px 0px #ffe0b2; }
-        header p { font-size: 1rem; color: #555; }
+        header h1 { font-size: 2.2rem; color: #e91e63; margin-bottom: 8px; text-shadow: 2px 2px 0px #ffe0b2; }
+        header p { font-size: 1.1rem; color: #555; }
 
-        /* Giao diện Lật Trang Sách (Album View) */
-        .book-container {
-            position: relative;
-            width: 100%; max-width: 800px; height: 550px;
-            display: flex; justify-content: center; align-items: center;
-            perspective: 1500px;
-            margin-bottom: 20px;
+        /* Bố cục trang dài: Mỗi hàng 2 hình */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            width: 100%; max-width: 900px;
+            padding: 10px;
+        }
+        @media (max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr; } /* Điện thoại nhỏ hiển thị 1 cột cho rộng */
         }
 
-        .page {
-            position: absolute;
-            width: 100%; height: 100%;
+        /* Khung ảnh phong cách dán thủ công */
+        .photo-card {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            padding: 20px;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            border: 8px solid #fff;
-            outline: 2px solid #ffcc80;
-            transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.6s ease;
-            backface-visibility: hidden;
-        }
-
-        .page img {
-            max-width: 100%; max-height: 420px;
-            object-fit: contain; border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 15px 15px 20px 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+            border: 2px solid #fff;
+        }
+        .photo-card:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            z-index: 10;
         }
 
-        .page-caption {
-            margin-top: 15px; font-weight: 700; color: #d81b60; font-size: 1.1rem;
+        /* Các góc xoay ngẫu nhiên */
+        .tilt-left { transform: rotate(-3deg); }
+        .tilt-right { transform: rotate(3deg); }
+        .tilt-straight { transform: rotate(0deg); }
+        .tilt-slight-left { transform: rotate(-1.5deg); }
+        .tilt-slight-right { transform: rotate(2deg); }
+
+        .photo-card img {
+            width: 100%; height: 260px;
+            object-fit: cover; border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .photo-caption {
+            margin-top: 12px; font-weight: 700; color: #d81b60; font-size: 1rem;
             text-align: center;
         }
 
-        /* Các góc độ ngẫu nhiên cho trang ảnh tạo cảm giác dán thủ công */
-        .page.tilt-left { transform: rotate(-3deg); }
-        .page.tilt-right { transform: rotate(3deg); }
-        .page.tilt-straight { transform: rotate(0deg); }
-
-        /* Nút điều hướng lật trang */
-        .nav-buttons {
-            display: flex; gap: 20px; align-items: center; margin-bottom: 20px;
+        /* Giao diện xem chi tiết dạng Lật Sách (Lightbox / Modal) */
+        .modal {
+            display: none; position: fixed; z-index: 1000; top: 0; left: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
+            justify-content: center; align-items: center; flex-direction: column;
+            padding: 20px;
         }
-        button.nav-btn {
-            background-color: #e91e63; color: white; border: none;
-            padding: 12px 25px; border-radius: 30px; font-weight: 700;
-            font-size: 1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(233,30,99,0.3);
+        .modal-content-box {
+            position: relative; background: white; padding: 25px; border-radius: 20px;
+            max-width: 750px; width: 100%; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 10px 40px rgba(255,255,255,0.2);
+            border: 5px solid #ffcc80;
+        }
+        .modal-content-box img {
+            max-width: 100%; max-height: 60vh; object-fit: contain; border-radius: 10px;
+        }
+        .modal-caption {
+            margin-top: 15px; font-weight: 700; color: #e91e63; font-size: 1.2rem; text-align: center;
+        }
+        .modal-close {
+            position: absolute; top: 15px; right: 20px; color: #aaa;
+            font-size: 35px; font-weight: bold; cursor: pointer; transition: color 0.2s;
+        }
+        .modal-close:hover { color: #e91e63; }
+
+        /* Nút lật trang trái/phải trong chế độ xem chi tiết */
+        .modal-nav {
+            display: flex; justify-content: space-between; width: 100%;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            padding: 0 20px; pointer-events: none;
+        }
+        .modal-btn {
+            background-color: rgba(233, 30, 99, 0.85); color: white; border: none;
+            width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem;
+            cursor: pointer; pointer-events: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: background 0.2s, transform 0.2s;
-            font-family: 'Quicksand', sans-serif;
+            display: flex; justify-content: center; align-items: center;
         }
-        button.nav-btn:hover { background-color: #c2185b; transform: scale(1.05); }
-        button.nav-btn:active { transform: scale(0.95); }
+        .modal-btn:hover { background-color: #c2185b; transform: scale(1.1); }
 
-        .page-indicator {
-            font-weight: 700; color: #455a64; font-size: 1.1rem;
-            background: rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-        }
-
-        footer { text-align: center; color: #78909c; font-weight: 600; margin-top: 10px; }
+        footer { text-align: center; color: #78909c; font-weight: 600; margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🌟 SÁCH ẢNH BÁO TƯỜNG KỶ NIỆM 🌟</h1>
-        <p>Chạm vào ảnh hoặc dùng nút bấm để lật qua các khoảnh khắc tuyệt vời của lớp mình!</p>
+        <h1>🌟 TRIỂN LÃM BÁO TƯỜNG KỶ NIỆM 🌟</h1>
+        <p>Góc nhỏ lưu giữ 22 khoảnh khắc tuyệt vời của lớp mình. Bấm vào ảnh để xem to như lật sách nhé!</p>
     </header>
 
-    <div class="book-container" id="bookContainer" onclick="nextPage()">
-        <!-- Các trang ảnh sẽ được tạo tự động bằng JavaScript -->
-    </div>
-
-    <div class="nav-buttons">
-        <button class="nav-btn" onclick="prevPage(event)">⬅️ Trang trước</button>
-        <div class="page-indicator" id="pageIndicator">1 / 22</div>
-        <button class="nav-btn" onclick="nextPage(event)">Trang sau ➡️</button>
-    </div>
+    <!-- Khu vực hiển thị lưới 2 ảnh mỗi hàng -->
+    <div class="gallery-grid" id="galleryGrid"></div>
 
     <footer>
         <p>Trang web thực hiện bởi Cô và Trò lớp chúng mình ❤️</p>
     </footer>
 
+    <!-- Khung xem chi tiết lật trang sách (Modal) -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content-box">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" src="" alt="Phóng to">
+            <div class="modal-caption" id="modalCaption">Khoảnh khắc</div>
+            
+            <div class="modal-nav">
+                <button class="modal-btn" onclick="prevModalImage(event)">❮</button>
+                <button class="modal-btn" onclick="nextModalImage(event)">❯</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const totalImages = 22;
-        let currentPage = 0;
-        const bookContainer = document.getElementById('bookContainer');
-        const pageIndicator = document.getElementById('pageIndicator');
+        const galleryGrid = document.getElementById('galleryGrid');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalCaption = document.getElementById('modalCaption');
+        
+        let currentIndex = 0;
+        const tilts = ['tilt-left', 'tilt-right', 'tilt-straight', 'tilt-slight-left', 'tilt-slight-right'];
 
-        // Mảng các góc nghiêng ngẫu nhiên cho sinh động
-        const tilts = ['tilt-left', 'tilt-right', 'tilt-straight'];
-
-        // Khởi tạo các trang ảnh
+        // Khởi tạo hiển thị danh sách 22 ảnh dàn trang dài
         for (let i = 1; i <= totalImages; i++) {
-            const page = document.createElement('div');
-            // Chọn ngẫu nhiên góc nghiêng cho mỗi trang
+            const card = document.createElement('div');
+            // Chọn ngẫu nhiên góc nghiêng cho từng card
             const randomTilt = tilts[Math.floor(Math.random() * tilts.length)];
-            page.className = `page ${randomTilt}`;
+            card.className = `photo-card ${randomTilt}`;
             
-            // Ẩn các trang sau, chỉ hiện trang đầu tiên
-            if (i > 1) {
-                page.style.display = 'none';
-                page.style.opacity = '0';
-            }
-
             const imgPath = `images/${i}.jpg`;
-            const fallbackPath = `images/${i}.png`;
-
-            page.innerHTML = `
-                <img src="${imgPath}" alt="Khoảnh khắc ${i}" 
-                     onerror="if(this.src.endsWith('.jpg')) { this.src='images/${i}.png'; } else { this.src='https://via.placeholder.com/600x400?text=Anh+${i}+chua+co'; }">
-                <div class="page-caption">Khoảnh khắc dễ thương số #${i}</div>
-            `;
             
-            bookContainer.appendChild(page);
+            card.innerHTML = `
+                <img src="${imgPath}" alt="Khoảnh khắc ${i}" 
+                     onerror="if(this.src.endsWith('.jpg')) { this.src='images/${i}.png'; } else { this.src='https://via.placeholder.com/400x300?text=Anh+${i}+chua+co'; }">
+                <div class="photo-caption">Khoảnh khắc dễ thương #${i}</div>
+            `;
+
+            // Bấm vào card nào sẽ mở modal xem chi tiết từ ảnh đó
+            card.onclick = () => openModal(i - 1);
+            galleryGrid.appendChild(card);
         }
 
-        const pages = bookContainer.getElementsByClassName('page');
+        function openModal(index) {
+            currentIndex = index;
+            updateModalContent();
+            modal.style.display = 'flex';
+        }
 
-        function updateBook() {
-            for (let i = 0; i < pages.length; i++) {
-                if (i === currentPage) {
-                    pages[i].style.display = 'flex';
-                    setTimeout(() => { pages[i].style.opacity = '1'; }, 50);
-                } else {
-                    pages[i].style.opacity = '0';
-                    setTimeout(() => { 
-                        if(i !== currentPage) pages[i].style.display = 'none'; 
-                    }, 400);
-                }
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function updateModalContent() {
+            const actualIndex = currentIndex + 1;
+            const imgPath = `images/${actualIndex}.jpg`;
+            modalImg.src = imgPath;
+            // Xử lý fallback nếu là png
+            modalImg.onerror = function() {
+                this.src = `images/${actualIndex}.png`;
+            };
+            modalCaption.innerText = `Khoảnh khắc dễ thương số #${actualIndex}`;
+        }
+
+        function nextModalImage(event) {
+            event.stopPropagation();
+            currentIndex = (currentIndex + 1) % totalImages;
+            updateModalContent();
+        }
+
+        function prevModalImage(event) {
+            event.stopPropagation();
+            currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+            updateModalContent();
+        }
+
+        // Đóng modal khi bấm ra vùng nền tối bên ngoài
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
             }
-            pageIndicator.innerText = `${currentPage + 1} / ${totalImages}`;
-        }
-
-        function nextPage(event) {
-            if(event) event.stopPropagation();
-            currentPage = (currentPage + 1) % totalImages;
-            updateBook();
-        }
-
-        function prevPage(event) {
-            if(event) event.stopPropagation();
-            currentPage = (currentPage - 1 + totalImages) % totalImages;
-            updateBook();
         }
     </script>
 </body>
