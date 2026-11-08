@@ -54,4 +54,121 @@
         }
 
         .page-caption {
-            margin-top: 15px; font-weight: 700; color: #d
+            margin-top: 15px; font-weight: 700; color: #d81b60; font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Các góc độ ngẫu nhiên cho trang ảnh tạo cảm giác dán thủ công */
+        .page.tilt-left { transform: rotate(-3deg); }
+        .page.tilt-right { transform: rotate(3deg); }
+        .page.tilt-straight { transform: rotate(0deg); }
+
+        /* Nút điều hướng lật trang */
+        .nav-buttons {
+            display: flex; gap: 20px; align-items: center; margin-bottom: 20px;
+        }
+        button.nav-btn {
+            background-color: #e91e63; color: white; border: none;
+            padding: 12px 25px; border-radius: 30px; font-weight: 700;
+            font-size: 1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(233,30,99,0.3);
+            transition: background 0.2s, transform 0.2s;
+            font-family: 'Quicksand', sans-serif;
+        }
+        button.nav-btn:hover { background-color: #c2185b; transform: scale(1.05); }
+        button.nav-btn:active { transform: scale(0.95); }
+
+        .page-indicator {
+            font-weight: 700; color: #455a64; font-size: 1.1rem;
+            background: rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        footer { text-align: center; color: #78909c; font-weight: 600; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌟 SÁCH ẢNH BÁO TƯỜNG KỶ NIỆM 🌟</h1>
+        <p>Chạm vào ảnh hoặc dùng nút bấm để lật qua các khoảnh khắc tuyệt vời của lớp mình!</p>
+    </header>
+
+    <div class="book-container" id="bookContainer" onclick="nextPage()">
+        <!-- Các trang ảnh sẽ được tạo tự động bằng JavaScript -->
+    </div>
+
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="prevPage(event)">⬅️ Trang trước</button>
+        <div class="page-indicator" id="pageIndicator">1 / 22</div>
+        <button class="nav-btn" onclick="nextPage(event)">Trang sau ➡️</button>
+    </div>
+
+    <footer>
+        <p>Trang web thực hiện bởi Cô và Trò lớp chúng mình ❤️</p>
+    </footer>
+
+    <script>
+        const totalImages = 22;
+        let currentPage = 0;
+        const bookContainer = document.getElementById('bookContainer');
+        const pageIndicator = document.getElementById('pageIndicator');
+
+        // Mảng các góc nghiêng ngẫu nhiên cho sinh động
+        const tilts = ['tilt-left', 'tilt-right', 'tilt-straight'];
+
+        // Khởi tạo các trang ảnh
+        for (let i = 1; i <= totalImages; i++) {
+            const page = document.createElement('div');
+            // Chọn ngẫu nhiên góc nghiêng cho mỗi trang
+            const randomTilt = tilts[Math.floor(Math.random() * tilts.length)];
+            page.className = `page ${randomTilt}`;
+            
+            // Ẩn các trang sau, chỉ hiện trang đầu tiên
+            if (i > 1) {
+                page.style.display = 'none';
+                page.style.opacity = '0';
+            }
+
+            const imgPath = `images/${i}.jpg`;
+            const fallbackPath = `images/${i}.png`;
+
+            page.innerHTML = `
+                <img src="${imgPath}" alt="Khoảnh khắc ${i}" 
+                     onerror="if(this.src.endsWith('.jpg')) { this.src='images/${i}.png'; } else { this.src='https://via.placeholder.com/600x400?text=Anh+${i}+chua+co'; }">
+                <div class="page-caption">Khoảnh khắc dễ thương số #${i}</div>
+            `;
+            
+            bookContainer.appendChild(page);
+        }
+
+        const pages = bookContainer.getElementsByClassName('page');
+
+        function updateBook() {
+            for (let i = 0; i < pages.length; i++) {
+                if (i === currentPage) {
+                    pages[i].style.display = 'flex';
+                    setTimeout(() => { pages[i].style.opacity = '1'; }, 50);
+                } else {
+                    pages[i].style.opacity = '0';
+                    setTimeout(() => { 
+                        if(i !== currentPage) pages[i].style.display = 'none'; 
+                    }, 400);
+                }
+            }
+            pageIndicator.innerText = `${currentPage + 1} / ${totalImages}`;
+        }
+
+        function nextPage(event) {
+            if(event) event.stopPropagation();
+            currentPage = (currentPage + 1) % totalImages;
+            updateBook();
+        }
+
+        function prevPage(event) {
+            if(event) event.stopPropagation();
+            currentPage = (currentPage - 1 + totalImages) % totalImages;
+            updateBook();
+        }
+    </script>
+</body>
+</html>
