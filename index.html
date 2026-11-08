@@ -9,54 +9,28 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Quicksand', sans-serif;
-            /* Nền xanh bảng đen đặc trưng */
-            background-color: #1e3f20;
-            background-image: 
-                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 24px 24px;
+            /* Nền xanh bảng đen kết hợp với hoa văn doodle lặp lại từ ảnh của bạn */
+            background-color: #1b381d;
+            background-image: url('images/doodle-bg.png');
+            background-repeat: repeat;
+            background-size: 350px; /* Kích thước lặp lại của hoa văn */
             color: #f1f8e9; 
             min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
             padding: 30px 15px; position: relative; overflow-x: hidden;
         }
 
-        /* --- TRẢI DÀI CÁC HÌNH DOODLE PHẤN TRẮNG KHẮP TRANG WEB --- */
-        .chalk-doodle {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.35);
-            font-family: monospace;
-            font-size: 1.8rem;
-            pointer-events: none;
+        /* Tạo lớp phủ tối nhẹ trên nền để nội dung chữ và ảnh nổi bật hơn */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(20, 45, 22, 0.85); /* Lớp phủ xanh rêu tối nhẹ */
             z-index: 0;
-            user-select: none;
-            text-shadow: 0 0 4px rgba(255,255,255,0.2);
-            animation: floatChalk 5s ease-in-out infinite alternate;
-        }
-        @keyframes floatChalk {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-8px) rotate(3deg); }
+            pointer-events: none;
         }
 
-        /* Phân bố doodle dọc theo các vị trí từ trên xuống dưới hai bên lề */
-        .d-top-left-1 { top: 40px; left: 4%; font-size: 2.5rem; }
-        .d-top-right-1 { top: 80px; right: 5%; font-size: 2.8rem; }
-        
-        .d-mid-left-1 { top: 350px; left: 2%; font-size: 2.6rem; }
-        .d-mid-right-1 { top: 420px; right: 3%; font-size: 3rem; }
-        
-        .d-mid-left-2 { top: 750px; left: 5%; font-size: 2.7rem; }
-        .d-mid-right-2 { top: 850px; right: 4%; font-size: 2.5rem; }
-
-        .d-bot-left-1 { top: 1250px; left: 3%; font-size: 2.8rem; }
-        .d-bot-right-1 { top: 1350px; right: 5%; font-size: 3rem; }
-
-        .d-bot-left-2 { top: 1850px; left: 4%; font-size: 2.6rem; }
-        .d-bot-right-2 { top: 1950px; right: 3%; font-size: 2.8rem; }
-
-        .d-end-left { top: 2450px; left: 5%; font-size: 2.7rem; }
-        .d-end-right { top: 2550px; right: 4%; font-size: 2.8rem; }
-
-        /* Đảm bảo phần nội dung nổi lên trên hình vẽ phấn */
+        /* Đảm bảo toàn bộ nội dung nổi lên trên lớp nền */
         header, .intro-box, .gallery-grid, footer {
             position: relative;
             z-index: 1;
@@ -66,7 +40,7 @@
             text-align: center; padding: 35px 20px;
             background: rgba(255, 255, 255, 0.95);
             color: #2e7d32;
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             margin-bottom: 25px; border: 4px dashed #81c784; width: 100%; max-width: 900px;
         }
         header h1 { font-size: 2.2rem; color: #d81b60; margin-bottom: 8px; text-shadow: 1px 1px 0px #ffe0b2; }
@@ -82,7 +56,7 @@
             padding: 30px 35px;
             margin-bottom: 35px;
             width: 100%; max-width: 900px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
             border: 4px solid #81c784;
         }
         .intro-box h2 {
@@ -125,7 +99,6 @@
         @media (max-width: 600px) {
             .gallery-grid { grid-template-columns: 1fr; }
             .intro-box { padding: 20px; }
-            .chalk-doodle { display: none; } /* Ẩn bớt trên mobile cho gọn giao diện */
         }
 
         /* Khung ảnh phong cách dán thủ công có góc nghiêng ngẫu nhiên */
@@ -133,7 +106,7 @@
             background: white;
             padding: 15px 15px 20px 15px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             display: flex; flex-direction: column; align-items: center;
@@ -141,7 +114,7 @@
         }
         .photo-card:hover {
             transform: scale(1.03) rotate(0deg) !important;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
             z-index: 10;
         }
 
@@ -170,7 +143,7 @@
         .modal-content-box {
             position: relative; background: white; padding: 25px; border-radius: 20px;
             max-width: 750px; width: 100%; display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
             border: 5px solid #81c784;
         }
         .modal-content-box img {
@@ -202,30 +175,11 @@
         footer { 
             text-align: center; color: #c8e6c9; font-weight: 600; 
             margin-top: 50px; font-size: 1.1rem; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
         }
     </style>
 </head>
 <body>
-
-    <!-- TRẢI DÀI CÁC HÌNH DOODLE PHẤN TRẮNG (BÚT, VỞ, CÔ VÀ TRÒ) KHẮP TRANG WEB -->
-    <div class="chalk-doodle d-top-left-1">✏️ 📖</div>
-    <div class="chalk-doodle d-top-right-1">👩‍🏫 🎒</div>
-    
-    <div class="chalk-doodle d-mid-left-1">📚 🖊️</div>
-    <div class="chalk-doodle d-mid-right-1">🍎 📐</div>
-    
-    <div class="chalk-doodle d-mid-left-2">🧑‍🎓 📝</div>
-    <div class="chalk-doodle d-mid-right-2">🖍️ 📐</div>
-
-    <div class="chalk-doodle d-bot-left-1">📖 ✏️</div>
-    <div class="chalk-doodle d-bot-right-1">🎒 👩‍🏫</div>
-
-    <div class="chalk-doodle d-bot-left-2">🖊️ 📚</div>
-    <div class="chalk-doodle d-bot-right-2">🍎 🧑‍🎓</div>
-
-    <div class="chalk-doodle d-end-left">🌟 📝</div>
-    <div class="chalk-doodle d-end-right">✨ 📐</div>
 
     <header>
         <h1>🌟 TRIỂN LÃM BÁO TƯỜNG KỶ NIỆM 20/11 🌟</h1>
