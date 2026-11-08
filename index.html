@@ -9,57 +9,81 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #e8f5e9 50%, #e3f2fd 100%);
-            color: #333; min-height: 100vh;
+            /* Nền xanh bảng đen đặc trưng */
+            background-color: #1e3f20;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: #f1f8e9; 
+            min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
-            padding: 20px; position: relative; overflow-x: hidden;
+            padding: 30px 15px; position: relative; overflow-x: hidden;
         }
 
-        /* --- CÁC HÌNH DOODLE TRANG TRÍ NỀN --- */
-        .doodle {
+        /* --- TRẢI DÀI CÁC HÌNH DOODLE PHẤN TRẮNG KHẮP TRANG WEB --- */
+        .chalk-doodle {
             position: absolute;
-            opacity: 0.25;
+            color: rgba(255, 255, 255, 0.35);
+            font-family: monospace;
+            font-size: 1.8rem;
             pointer-events: none;
             z-index: 0;
-            animation: floatDoodle 6s ease-in-out infinite alternate;
+            user-select: none;
+            text-shadow: 0 0 4px rgba(255,255,255,0.2);
+            animation: floatChalk 5s ease-in-out infinite alternate;
         }
-        @keyframes floatDoodle {
+        @keyframes floatChalk {
             0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-15px) rotate(5deg); }
+            100% { transform: translateY(-8px) rotate(3deg); }
         }
-        .doodle-1 { top: 30px; left: 5%; font-size: 3rem; animation-delay: 0s; }
-        .doodle-2 { top: 120px; right: 8%; font-size: 3.5rem; animation-delay: 1s; }
-        .doodle-3 { top: 350px; left: 3%; font-size: 3rem; animation-delay: 2s; }
-        .doodle-4 { top: 520px; right: 4%; font-size: 3.2rem; animation-delay: 1.5s; }
-        .doodle-5 { top: 850px; left: 6%; font-size: 3.5rem; animation-delay: 2.5s; }
-        .doodle-6 { top: 1100px; right: 7%; font-size: 3rem; animation-delay: 0.8s; }
 
-        /* Đảm bảo nội dung nổi lên trên hình nền doodle */
+        /* Phân bố doodle dọc theo các vị trí từ trên xuống dưới hai bên lề */
+        .d-top-left-1 { top: 40px; left: 4%; font-size: 2.5rem; }
+        .d-top-right-1 { top: 80px; right: 5%; font-size: 2.8rem; }
+        
+        .d-mid-left-1 { top: 350px; left: 2%; font-size: 2.6rem; }
+        .d-mid-right-1 { top: 420px; right: 3%; font-size: 3rem; }
+        
+        .d-mid-left-2 { top: 750px; left: 5%; font-size: 2.7rem; }
+        .d-mid-right-2 { top: 850px; right: 4%; font-size: 2.5rem; }
+
+        .d-bot-left-1 { top: 1250px; left: 3%; font-size: 2.8rem; }
+        .d-bot-right-1 { top: 1350px; right: 5%; font-size: 3rem; }
+
+        .d-bot-left-2 { top: 1850px; left: 4%; font-size: 2.6rem; }
+        .d-bot-right-2 { top: 1950px; right: 3%; font-size: 2.8rem; }
+
+        .d-end-left { top: 2450px; left: 5%; font-size: 2.7rem; }
+        .d-end-right { top: 2550px; right: 4%; font-size: 2.8rem; }
+
+        /* Đảm bảo phần nội dung nổi lên trên hình vẽ phấn */
         header, .intro-box, .gallery-grid, footer {
             position: relative;
             z-index: 1;
         }
 
         header {
-            text-align: center; padding: 30px 20px;
+            text-align: center; padding: 35px 20px;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 25px; border: 3px dashed #ffb74d; width: 100%; max-width: 900px;
+            color: #2e7d32;
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 25px; border: 4px dashed #81c784; width: 100%; max-width: 900px;
         }
-        header h1 { font-size: 2.2rem; color: #e91e63; margin-bottom: 8px; text-shadow: 2px 2px 0px #ffe0b2; }
-        header p { font-size: 1.1rem; color: #555; margin-bottom: 4px; }
-        header p:nth-of-type(2) { font-weight: 700; color: #388e3c; }
-        header p:nth-of-type(3) { font-weight: 600; color: #f57c00; font-size: 1rem; }
+        header h1 { font-size: 2.2rem; color: #d81b60; margin-bottom: 8px; text-shadow: 1px 1px 0px #ffe0b2; }
+        header p { font-size: 1.1rem; color: #455a64; margin-bottom: 4px; }
+        header p:nth-of-type(2) { font-weight: 700; color: #2e7d32; }
+        header p:nth-of-type(3) { font-weight: 600; color: #e65100; font-size: 1rem; }
 
-        /* Khung Lời Ngỏ cân đối, đồng bộ */
+        /* Khung Lời Ngỏ cân đối */
         .intro-box {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
             border-radius: 16px;
             padding: 30px 35px;
             margin-bottom: 35px;
             width: 100%; max-width: 900px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            border: 3px solid #ffcc80;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 4px solid #81c784;
         }
         .intro-box h2 {
             color: #d81b60;
@@ -67,7 +91,7 @@
             text-align: center;
             margin-bottom: 20px;
             text-transform: uppercase;
-            border-bottom: 2px dashed #ffe0b2;
+            border-bottom: 2px dashed #a5d6a7;
             padding-bottom: 10px;
         }
         .intro-box p {
@@ -87,6 +111,7 @@
             background: #fdf2f8;
             padding: 12px;
             border-radius: 10px;
+            border: 1px dashed #f48fb1;
         }
 
         /* Bố cục trang dài: Mỗi hàng 2 hình ảnh */
@@ -100,7 +125,7 @@
         @media (max-width: 600px) {
             .gallery-grid { grid-template-columns: 1fr; }
             .intro-box { padding: 20px; }
-            .doodle { display: none; }
+            .chalk-doodle { display: none; } /* Ẩn bớt trên mobile cho gọn giao diện */
         }
 
         /* Khung ảnh phong cách dán thủ công có góc nghiêng ngẫu nhiên */
@@ -108,7 +133,7 @@
             background: white;
             padding: 15px 15px 20px 15px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             display: flex; flex-direction: column; align-items: center;
@@ -116,7 +141,7 @@
         }
         .photo-card:hover {
             transform: scale(1.03) rotate(0deg) !important;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
             z-index: 10;
         }
 
@@ -145,8 +170,8 @@
         .modal-content-box {
             position: relative; background: white; padding: 25px; border-radius: 20px;
             max-width: 750px; width: 100%; display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 10px 40px rgba(255,255,255,0.2);
-            border: 5px solid #ffcc80;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 5px solid #81c784;
         }
         .modal-content-box img {
             max-width: 100%; max-height: 60vh; object-fit: contain; border-radius: 10px;
@@ -174,18 +199,33 @@
         }
         .modal-btn:hover { background-color: #c2185b; transform: scale(1.1); }
 
-        footer { text-align: center; color: #78909c; font-weight: 600; margin-top: 40px; font-size: 1.1rem; }
+        footer { 
+            text-align: center; color: #c8e6c9; font-weight: 600; 
+            margin-top: 50px; font-size: 1.1rem; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Các hình Doodle trang trí nền -->
-    <div class="doodle doodle-1">✏️ 📖</div>
-    <div class="doodle doodle-2">👩‍🏫 🎒</div>
-    <div class="doodle doodle-3">📐 ✒️</div>
-    <div class="doodle doodle-4">🎨 🍎</div>
-    <div class="doodle doodle-5">📚 🖊️</div>
-    <div class="doodle doodle-6">🌟 🎓</div>
+    <!-- TRẢI DÀI CÁC HÌNH DOODLE PHẤN TRẮNG (BÚT, VỞ, CÔ VÀ TRÒ) KHẮP TRANG WEB -->
+    <div class="chalk-doodle d-top-left-1">✏️ 📖</div>
+    <div class="chalk-doodle d-top-right-1">👩‍🏫 🎒</div>
+    
+    <div class="chalk-doodle d-mid-left-1">📚 🖊️</div>
+    <div class="chalk-doodle d-mid-right-1">🍎 📐</div>
+    
+    <div class="chalk-doodle d-mid-left-2">🧑‍🎓 📝</div>
+    <div class="chalk-doodle d-mid-right-2">🖍️ 📐</div>
+
+    <div class="chalk-doodle d-bot-left-1">📖 ✏️</div>
+    <div class="chalk-doodle d-bot-right-1">🎒 👩‍🏫</div>
+
+    <div class="chalk-doodle d-bot-left-2">🖊️ 📚</div>
+    <div class="chalk-doodle d-bot-right-2">🍎 🧑‍🎓</div>
+
+    <div class="chalk-doodle d-end-left">🌟 📝</div>
+    <div class="chalk-doodle d-end-right">✨ 📐</div>
 
     <header>
         <h1>🌟 TRIỂN LÃM BÁO TƯỜNG KỶ NIỆM 20/11 🌟</h1>
@@ -194,7 +234,7 @@
         <p>Năm học 2026-2027</p>
     </header>
 
-    <!-- Khung Lời Ngỏ cân đối -->
+    <!-- Khung Lời Ngỏ -->
     <div class="intro-box">
         <h2>📖 Lời Ngỏ: Chuyến Đò Ân Tình</h2>
         <p>Tháng 11 gợi nhắc mỗi chúng ta hướng về ngày Nhà giáo Việt Nam 20/11 – ngày tôn vinh những người mang sứ mệnh cao cả: "Người đưa đò thầm lặng".</p>
