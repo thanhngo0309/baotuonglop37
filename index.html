@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHÀO MỪNG NGÀY NHÀ GIÁO VIỆT NAM 20/11</title>
+    <title>Báo Tường Chào Mừng 20/11 - Lớp Yêu Thương</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,14 +16,53 @@
         }
         header {
             text-align: center; padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 30px; border: 3px dashed #ffb74d; width: 100%; max-width: 900px;
+            margin-bottom: 25px; border: 3px dashed #ffb74d; width: 100%; max-width: 900px;
         }
         header h1 { font-size: 2.2rem; color: #e91e63; margin-bottom: 8px; text-shadow: 2px 2px 0px #ffe0b2; }
         header p { font-size: 1.1rem; color: #555; }
 
-        /* Bố cục trang dài: Mỗi hàng 2 hình */
+        /* Khung Lời Ngỏ được thiết kế cân đối, đồng bộ với độ rộng 900px của lưới ảnh */
+        .intro-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px 35px;
+            margin-bottom: 35px;
+            width: 100%; max-width: 900px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 3px solid #ffcc80;
+            position: relative;
+        }
+        .intro-box h2 {
+            color: #d81b60;
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px dashed #ffe0b2;
+            padding-bottom: 10px;
+        }
+        .intro-box p {
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.02rem;
+            text-align: justify;
+        }
+        .intro-box .quote-highlight {
+            font-weight: 700;
+            color: #c2185b;
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+            font-style: italic;
+            background: #fdf2f8;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        /* Bố cục trang dài: Mỗi hàng 2 hình ảnh, căn chỉnh khớp hoàn toàn với khối Lời ngỏ */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -32,10 +71,11 @@
             padding: 10px;
         }
         @media (max-width: 600px) {
-            .gallery-grid { grid-template-columns: 1fr; } /* Điện thoại nhỏ hiển thị 1 cột cho rộng */
+            .gallery-grid { grid-template-columns: 1fr; }
+            .intro-box { padding: 20px; }
         }
 
-        /* Khung ảnh phong cách dán thủ công */
+        /* Khung ảnh phong cách dán thủ công có góc nghiêng ngẫu nhiên */
         .photo-card {
             background: white;
             padding: 15px 15px 20px 15px;
@@ -52,7 +92,6 @@
             z-index: 10;
         }
 
-        /* Các góc xoay ngẫu nhiên */
         .tilt-left { transform: rotate(-3deg); }
         .tilt-right { transform: rotate(3deg); }
         .tilt-straight { transform: rotate(0deg); }
@@ -62,9 +101,7 @@
         .photo-card img {
             width: 100%; height: 260px;
             object-fit: cover; border-radius: 8px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
-
         .photo-caption {
             margin-top: 12px; font-weight: 700; color: #d81b60; font-size: 1rem;
             text-align: center;
@@ -95,7 +132,6 @@
         }
         .modal-close:hover { color: #e91e63; }
 
-        /* Nút lật trang trái/phải trong chế độ xem chi tiết */
         .modal-nav {
             display: flex; justify-content: space-between; width: 100%;
             position: absolute; top: 50%; transform: translateY(-50%);
@@ -116,11 +152,11 @@
 <body>
 
     <header>
-        <h1>🌟 TRIỂN LÃM BÁO TƯỜNG KỶ NIỆM 20/11 LỚP 3-7🌟</h1>
+        <h1>🌟 TRIỂN LÃM BÁO TƯỜNG KỶ NIỆM 20/11 🌟</h1>
         <p>Chào mừng ngày Nhà giáo Việt Nam - Tri ân người lái đò thầm lặng</p>
     </header>
 
-    <!-- Khung Lời Ngỏ Chào Mừng 20/11 -->
+    <!-- Khung Lời Ngỏ được đóng khung cân đối, cùng độ rộng 900px với lưới ảnh -->
     <div class="intro-box">
         <h2>📖 Lời Ngỏ: Chuyến Đò Ân Tình</h2>
         <p>Tháng 11 lại về trong cái se lạnh đầu đông, mang theo những tia nắng vàng ấm áp gợi nhắc mỗi chúng ta hướng về ngày Nhà giáo Việt Nam 20/11 – ngày tôn vinh những người mang sứ mệnh cao cả: "Người đưa đò thầm lặng".</p>
@@ -129,7 +165,7 @@
         <span class="quote-highlight">Nhân ngày 20/11, xin kính chúc các thầy cô luôn dồi dào sức khỏe, hạnh phúc và gặt hái thật nhiều thành công trong sự nghiệp trồng người! ❤️</span>
     </div>
 
-    <!-- Khu vực hiển thị lưới 2 ảnh mỗi hàng -->
+    <!-- Khu vực hiển thị lưới ảnh dài (2 ảnh mỗi hàng, xoay ngẫu nhiên) -->
     <div class="gallery-grid" id="galleryGrid"></div>
 
     <footer>
@@ -160,10 +196,8 @@
         let currentIndex = 0;
         const tilts = ['tilt-left', 'tilt-right', 'tilt-straight', 'tilt-slight-left', 'tilt-slight-right'];
 
-        // Khởi tạo hiển thị danh sách 22 ảnh dàn trang dài
         for (let i = 1; i <= totalImages; i++) {
             const card = document.createElement('div');
-            // Chọn ngẫu nhiên góc nghiêng cho từng card
             const randomTilt = tilts[Math.floor(Math.random() * tilts.length)];
             card.className = `photo-card ${randomTilt}`;
             
@@ -175,7 +209,6 @@
                 <div class="photo-caption">Khoảnh khắc dễ thương #${i}</div>
             `;
 
-            // Bấm vào card nào sẽ mở modal xem chi tiết từ ảnh đó
             card.onclick = () => openModal(i - 1);
             galleryGrid.appendChild(card);
         }
@@ -194,7 +227,6 @@
             const actualIndex = currentIndex + 1;
             const imgPath = `images/${actualIndex}.jpg`;
             modalImg.src = imgPath;
-            // Xử lý fallback nếu là png
             modalImg.onerror = function() {
                 this.src = `images/${actualIndex}.png`;
             };
@@ -213,7 +245,6 @@
             updateModalContent();
         }
 
-        // Đóng modal khi bấm ra vùng nền tối bên ngoài
         window.onclick = function(event) {
             if (event.target === modal) {
                 closeModal();
