@@ -11,8 +11,10 @@
             font-family: 'Quicksand', sans-serif;
             background-color: #1b381d;
             background-image: url('images/doodle-bg.png');
-            background-repeat: repeat;
-            background-size: 350px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
             color: #f1f8e9; 
             min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
@@ -23,7 +25,7 @@
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(20, 45, 22, 0.85);
+            background: rgba(20, 45, 22, 0.88);
             z-index: 0;
             pointer-events: none;
         }
@@ -33,7 +35,7 @@
             z-index: 1;
         }
 
-        /* --- POPUP TRÌNH PHÁT NHẠC NỔI (HỖ TRỢ MULTI-PLAYLIST) --- */
+        /* --- POPUP TRÌNH PHÁT NHẠC NỔI (PLAYLIST) --- */
         .music-popup {
             position: fixed;
             bottom: 20px;
@@ -262,7 +264,7 @@
         <div class="modal-content-box">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <img id="modalImg" src="" alt="Phóng to">
-            <div class="modal-caption" id="modalCaption">Khoảnh khắc</div>
+            <div class="modal-caption" id="modalCaption">Tri ân thầy cô</div>
             
             <div class="modal-nav">
                 <button class="modal-btn" onclick="prevModalImage(event)">❮</button>
@@ -289,9 +291,9 @@
             const imgPath = `images/${i}.jpg`;
             
             card.innerHTML = `
-                <img src="${imgPath}" alt="Khoảnh khắc ${i}" 
+                <img src="${imgPath}" alt="Tri ân thầy cô ${i}" 
                      onerror="if(this.src.endsWith('.jpg')) { this.src='images/${i}.png'; } else { this.src='https://via.placeholder.com/400x300?text=Anh+${i}+chua+co'; }">
-                <div class="photo-caption">Khoảnh khắc dễ thương #${i}</div>
+                <div class="photo-caption">Tri ân thầy cô ❤️</div>
             `;
 
             card.onclick = () => openModal(i - 1);
@@ -315,7 +317,7 @@
             modalImg.onerror = function() {
                 this.src = `images/${actualIndex}.png`;
             };
-            modalCaption.innerText = `Khoảnh khắc dễ thương số #${actualIndex}`;
+            modalCaption.innerText = `Tri ân thầy cô ❤️`;
         }
 
         function nextModalImage(event) {
@@ -336,19 +338,19 @@
             }
         }
 
-        // --- DANH SÁCH PHÁT NHẠC (PLAYLIST NHIỀU BÀI) ---
+        // --- PLAYLIST NHẠC TRONG THƯ MỤC music ---
         const playlist = [
             {
                 title: "🎶 Bụi Phấn",
-                src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=gentle-piano-ambient-111190.mp3"
+                src: "music/buiphan.mp3"
             },
             {
-                title: "🎶 Khi Tóc Thầy Bạc Trắng",
-                src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c3866b56.mp3?filename=peaceful-guitar-11306.mp3"
+                title: "🎶 Người thầy",
+                src: "music/nguoithay.mp3"
             },
             {
                 title: "🎶 Nhớ Ơn Thầy Cô",
-                src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=inspiring-cinematic-ambient-116199.mp3"
+                src: "music/nhoonthayco.mp3"
             }
         ];
 
@@ -358,7 +360,6 @@
         const musicInfo = document.getElementById('musicInfo');
         const volumeSlider = document.getElementById('volumeSlider');
 
-        // Đặt âm lượng mặc định 50%
         audio.volume = 0.5;
 
         function loadSong(index) {
@@ -388,15 +389,12 @@
             audio.volume = val;
         }
 
-        // Tự động chuyển sang bài tiếp theo khi bài hiện tại kết thúc
         audio.onended = function() {
             nextSong();
         };
 
-        // Khởi tạo bài đầu tiên
         loadSong(currentSongIndex);
 
-        // Tự động phát nhạc khi người dùng click lần đầu tiên lên trang web
         document.addEventListener('click', function musicAutoPlay() {
             if (audio.paused) {
                 audio.play().then(() => {
