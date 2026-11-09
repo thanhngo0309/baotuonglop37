@@ -125,7 +125,6 @@
             transform: translateX(5px);
             border-color: #81c784;
         }
-        /* Active Tab tùy biến theo màu sắc từng mục */
         .tab-btn.active[data-target="tab-home"] { background: #00897b; color: white; border-color: #004d40; }
         .tab-btn.active[data-target="tab-intro"] { background: #e91e63; color: white; border-color: #ad1457; }
         .tab-btn.active[data-target="tab-literature"] { background: #7b1fa2; color: white; border-color: #4a148c; }
@@ -160,7 +159,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- MÀU SẮC RIÊNG CHO TỪNG TAB CONTAINER --- */
         header {
             text-align: center; padding: 45px 30px;
             background: rgba(255, 255, 255, 0.95);
@@ -173,7 +171,7 @@
         header p:nth-of-type(2) { font-weight: 700; color: #00897b; }
         header p:nth-of-type(3) { font-weight: 600; color: #d81b60; font-size: 1.05rem; }
 
-        /* Khung Lời Ngỏ (Màu Hồng) */
+        /* Khung Lời Ngỏ */
         .intro-box {
             background: rgba(255, 255, 255, 0.95);
             color: #333;
@@ -209,7 +207,6 @@
             background: #fdf2f8; padding: 12px; border-radius: 10px; border: 1px dashed #f48fb1;
         }
 
-        /* Tiêu đề từng chuyên mục tab */
         .tab-section-title {
             font-size: 1.8rem;
             margin-bottom: 25px;
@@ -222,7 +219,6 @@
             max-width: 900px;
         }
 
-        /* Lưới hiển thị ảnh chung cho các Tab */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -261,13 +257,12 @@
             margin-top: 12px; font-weight: 700; font-size: 1rem; text-align: center;
         }
 
-        /* Màu chữ caption theo từng tab */
         #tab-literature .photo-caption { color: #7b1fa2; }
         #tab-art .photo-caption { color: #0277bd; }
         #tab-memories .photo-caption { color: #ef6c00; }
         #tab-wishes .photo-caption { color: #2e7d32; }
 
-        /* Modal Xem Ảnh Phóng To */
+        /* Modal Phóng To Ảnh */
         .modal {
             display: none; position: fixed; z-index: 1000; top: 0; left: 0;
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.85);
@@ -321,7 +316,7 @@
         <button class="music-btn" id="playPauseBtn" onclick="togglePlay()">⏸️</button>
         <button class="music-btn" id="nextBtn" onclick="nextSong()" title="Bài tiếp theo">⏭️</button>
         <div class="volume-control">
-            🔊 <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" onchange="changeVolume(this.value)" oninput="changeVolume(this.value)">
+            🔊 <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.35" onchange="changeVolume(this.value)" oninput="changeVolume(this.value)">
         </div>
     </div>
 
@@ -381,7 +376,7 @@
             </footer>
         </div>
 
-        <!-- TAB 3: TRANG VĂN HỌC TUỔI THƠ (tho + số) -->
+        <!-- TAB 3: TRANG VĂN HỌC TUỔI THƠ -->
         <div id="tab-literature" class="tab-pane">
             <div class="tab-section-title" style="color: #ce93d8;">📚 Văn Học Tuổi Thơ</div>
             <div class="gallery-grid" id="grid-literature"></div>
@@ -390,7 +385,7 @@
             </footer>
         </div>
 
-        <!-- TAB 4: NÉT VẼ TRI ÂN (tranh + số) -->
+        <!-- TAB 4: NÉT VẼ TRI ÂN -->
         <div id="tab-art" class="tab-pane">
             <div class="tab-section-title" style="color: #81d4fa;">🎨 Nét Vẽ Tri Ân</div>
             <div class="gallery-grid" id="grid-art"></div>
@@ -399,7 +394,7 @@
             </footer>
         </div>
 
-        <!-- TAB 5: KỶ NIỆM DƯỚI MÁI TRƯỜNG (baiviet + số) -->
+        <!-- TAB 5: KỶ NIỆM DƯỚI MÁI TRƯỜNG -->
         <div id="tab-memories" class="tab-pane">
             <div class="tab-section-title" style="color: #ffb74d;">🏫 Kỷ Niệm Dưới Mái Trường</div>
             <div class="gallery-grid" id="grid-memories"></div>
@@ -408,7 +403,7 @@
             </footer>
         </div>
 
-        <!-- TAB 6: LỜI HAY Ý ĐẸP (loichuc + số) -->
+        <!-- TAB 6: LỜI HAY Ý ĐẸP -->
         <div id="tab-wishes" class="tab-pane">
             <div class="tab-section-title" style="color: #a5d6a7;">✨ Lời Hay Ý Đẹp</div>
             <div class="gallery-grid" id="grid-wishes"></div>
@@ -442,38 +437,80 @@
             document.querySelector(`[data-target="${targetId}"]`).classList.add('active');
         }
 
-        // --- KHỞI TẠO NỘI DUNG CÁC CHUYÊN MỤC ẢNH ---
+        // --- KHỞI TẠO ĐỘNG SỐ LƯỢNG ẢNH THỰC TẾ TRONG THƯ MỤC ---
         const tilts = ['tilt-left', 'tilt-right', 'tilt-straight', 'tilt-slight-left', 'tilt-slight-right'];
 
-        // Cấu hình danh sách các chuyên mục ảnh (prefix tên file và số lượng giả định ví dụ 6 ảnh mỗi mục)
         const categories = [
-            { id: 'grid-literature', prefix: 'tho', count: 6, title: 'Thơ ca tri ân thầy cô' },
-            { id: 'grid-art', prefix: 'tranh', count: 6, title: 'Tranh vẽ dâng thầy cô' },
-            { id: 'grid-memories', prefix: 'baiviet', count: 6, title: 'Bài viết kỷ niệm' },
-            { id: 'grid-wishes', prefix: 'loichuc', count: 6, title: 'Lời chúc ý nghĩa' }
+            { id: 'grid-literature', prefix: 'tho', title: 'Thơ ca tri ân thầy cô' },
+            { id: 'grid-art', prefix: 'tranh', title: 'Tranh vẽ dâng thầy cô' },
+            { id: 'grid-memories', prefix: 'baiviet', title: 'Bài viết kỷ niệm' },
+            { id: 'grid-wishes', prefix: 'loichuc', title: 'Lời chúc ý nghĩa' }
         ];
 
-        let activeGalleryItems = [];
-        let currentModalIndex = 0;
+        // Lưu trữ danh sách ảnh thực tế load thành công cho Lightbox
+        const categoryImages = {
+            tho: [],
+            tranh: [],
+            baiviet: [],
+            loichuc: []
+        };
 
         categories.forEach(cat => {
             const container = document.getElementById(cat.id);
-            for (let i = 1; i <= cat.count; i++) {
-                const card = document.createElement('div');
-                const randomTilt = tilts[Math.floor(Math.random() * tilts.length)];
-                card.className = `photo-card ${randomTilt}`;
-                
+            let i = 1;
+            // Tự động kiểm tra và load từng hình tăng dần (tho1.jpg, tho2.jpg...) cho đến khi hết hình thực tế
+            function checkAndLoadImage() {
                 const imgPath = `images/${cat.prefix}${i}.jpg`;
-                
-                card.innerHTML = `
-                    <img src="${imgPath}" alt="${cat.title} ${i}" 
-                         onerror="if(this.src.endsWith('.jpg')) { this.src='images/${cat.prefix}${i}.png'; } else { this.src='https://via.placeholder.com/400x300?text=${cat.title}+${i}'; }">
-                    <div class="photo-caption">${cat.title} #${i}</div>
-                `;
+                const testImg = new Image();
+                testImg.src = imgPath;
+                testImg.onload = function() {
+                    // Nếu ảnh tồn tại, thêm vào giao diện
+                    categoryImages[cat.prefix].push(imgPath);
+                    const card = document.createElement('div');
+                    const randomTilt = tilts[Math.floor(Math.random() * tilts.length)];
+                    card.className = `photo-card ${randomTilt}`;
+                    
+                    const currentIndex = categoryImages[cat.prefix].length - 1;
+                    card.innerHTML = `
+                        <img src="${imgPath}" alt="${cat.title}">
+                        <div class="photo-caption">${cat.title}</div>
+                    `;
 
-                card.onclick = () => openModalForCategory(cat.prefix, i, cat.count);
-                container.appendChild(card);
+                    card.onclick = () => openModalForCategory(cat.prefix, currentIndex);
+                    container.appendChild(card);
+                    
+                    i++;
+                    checkAndLoadImage(); // Kiểm tra tiếp file tiếp theo (i+1)
+                };
+                testImg.onerror = function() {
+                    // Thử kiểm tra định dạng .png nếu không tìm thấy .jpg
+                    const pngPath = `images/${cat.prefix}${i}.png`;
+                    const testPng = new Image();
+                    testPng.src = pngPath;
+                    testPng.onload = function() {
+                        categoryImages[cat.prefix].push(pngPath);
+                        const card = document.createElement('div');
+                        const randomTilt = tilts[Math.floor(Math.random() * tilts.length)];
+                        card.className = `photo-card ${randomTilt}`;
+                        
+                        const currentIndex = categoryImages[cat.prefix].length - 1;
+                        card.innerHTML = `
+                            <img src="${pngPath}" alt="${cat.title}">
+                            <div class="photo-caption">${cat.title}</div>
+                        `;
+
+                        card.onclick = () => openModalForCategory(cat.prefix, currentIndex);
+                        container.appendChild(card);
+                        
+                        i++;
+                        checkAndLoadImage();
+                    };
+                    testPng.onerror = function() {
+                        // Dừng lại khi không tìm thấy file ảnh tiếp theo (đúng số lượng thực tế)
+                    };
+                };
             }
+            checkAndLoadImage();
         });
 
         // --- MODAL LIGHTBOX ---
@@ -481,23 +518,21 @@
         const modalImg = document.getElementById('modalImg');
         const modalCaption = document.getElementById('modalCaption');
         let currentPrefix = '';
-        let currentMaxCount = 0;
+        let currentModalIndex = 0;
 
-        function openModalForCategory(prefix, index, maxCount) {
+        function openModalForCategory(prefix, index) {
             currentPrefix = prefix;
             currentModalIndex = index;
-            currentMaxCount = maxCount;
             updateModalView();
             modal.style.display = 'flex';
         }
 
         function updateModalView() {
-            const imgPath = `images/${currentPrefix}${currentModalIndex}.jpg`;
-            modalImg.src = imgPath;
-            modalImg.onerror = function() {
-                this.src = `images/${currentPrefix}${currentModalIndex}.png`;
-            };
-            modalCaption.innerText = `Tri ân thầy cô ❤️ (${currentPrefix.toUpperCase()} #${currentModalIndex})`;
+            const list = categoryImages[currentPrefix];
+            if (list && list.length > 0) {
+                modalImg.src = list[currentModalIndex];
+                modalCaption.innerText = `Tri ân thầy cô ❤️`;
+            }
         }
 
         function closeModal() {
@@ -506,14 +541,20 @@
 
         function nextModalImage(event) {
             event.stopPropagation();
-            currentModalIndex = currentModalIndex >= currentMaxCount ? 1 : currentModalIndex + 1;
-            updateModalView();
+            const list = categoryImages[currentPrefix];
+            if (list && list.length > 0) {
+                currentModalIndex = (currentModalIndex + 1) % list.length;
+                updateModalView();
+            }
         }
 
         function prevModalImage(event) {
             event.stopPropagation();
-            currentModalIndex = currentModalIndex <= 1 ? currentMaxCount : currentModalIndex - 1;
-            updateModalView();
+            const list = categoryImages[currentPrefix];
+            if (list && list.length > 0) {
+                currentModalIndex = (currentModalIndex - 1 + list.length) % list.length;
+                updateModalView();
+            }
         }
 
         window.onclick = function(event) {
@@ -533,7 +574,8 @@
         const musicInfo = document.getElementById('musicInfo');
         const volumeSlider = document.getElementById('volumeSlider');
 
-        audio.volume = 0.5;
+        // Đặt âm lượng mặc định ban đầu ở mức 35% (vừa đủ nghe)
+        audio.volume = 0.35;
 
         function loadSong(index) {
             audio.src = playlist[index].src;
